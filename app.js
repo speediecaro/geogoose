@@ -7,6 +7,9 @@
     ? { points: ' points', depart: 'Départ', arrivee: 'Dernière position', google: 'Ouvrir dans Google Maps', erreur: 'Lien de trajet invalide ou incomplet.' }
     : { points: ' points', depart: 'Start', arrivee: 'Last position', google: 'Open in Google Maps', erreur: 'Invalid or incomplete route link.' };
   document.documentElement.lang = fr ? 'fr' : 'en';
+  document.getElementById('tagline').textContent = fr
+    ? 'Un texto, un honk. On veille les uns sur les autres.'
+    : 'One text. One honk. Everyone looking out for each other.';
 
   // Même algorithme que l'app : "encoded polyline" (précision 1e5) avec alphabet base64url.
   var ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';

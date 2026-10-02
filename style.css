@@ -26,6 +26,11 @@ header a {
   font-weight: 600;
 }
 
+.tagline {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
 #map {
   flex: 1;
 }
