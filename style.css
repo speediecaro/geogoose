@@ -1,3 +1,9 @@
+:root {
+  --brand-primary: #00826d;
+  --brand-mint: #ddf8ef;
+  --brand-ink: #052d26;
+}
+
 html, body {
   margin: 0;
   height: 100%;
@@ -15,14 +21,15 @@ header {
   align-items: center;
   gap: 6px 12px;
   padding: 10px 14px;
-  background: #9333ea;
-  color: #fff;
+  background: var(--brand-mint);
+  color: var(--brand-ink);
+  border-bottom: 3px solid var(--brand-primary);
   font-size: 14px;
 }
 
 header a {
   margin-left: auto;
-  color: #fff;
+  color: var(--brand-primary);
   font-weight: 600;
 }
 
@@ -31,8 +38,33 @@ header a {
   opacity: 0.9;
 }
 
+.brand-logo {
+  flex: 0 0 40px;
+  border-radius: 8px;
+}
+
+header strong {
+  font-size: 20px;
+}
+
+header a:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .tagline {
+    flex-basis: 100%;
+  }
+
+  header a {
+    margin-left: 0;
+  }
+}
+
 #map {
   flex: 1;
+  min-height: 200px;
 }
 
 .message {

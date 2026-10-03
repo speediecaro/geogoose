@@ -2,7 +2,11 @@
 
 // Les positions sont dans le fragment (#p=...) : il n'est jamais envoyé au serveur.
 (function () {
-  var fr = (navigator.language || 'fr').toLowerCase().indexOf('fr') === 0;
+  var params = new URLSearchParams(location.hash.slice(1));
+  var requestedLanguage = params.get('lang') || new URLSearchParams(location.search).get('lang');
+  var language = requestedLanguage === 'fr' || requestedLanguage === 'en'
+    ? requestedLanguage : (navigator.language || 'fr').toLowerCase();
+  var fr = language.indexOf('fr') === 0;
   var t = fr
     ? { points: ' points', depart: 'Départ', arrivee: 'Dernière position', google: 'Ouvrir dans Google Maps', erreur: 'Lien de trajet invalide ou incomplet.' }
     : { points: ' points', depart: 'Start', arrivee: 'Last position', google: 'Open in Google Maps', erreur: 'Invalid or incomplete route link.' };
@@ -49,7 +53,6 @@
 
   var points;
   try {
-    var params = new URLSearchParams(location.hash.slice(1));
     points = decoder(params.get('p') || '');
   } catch (e) {
     points = [];
@@ -65,10 +68,10 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
   }).addTo(carte);
 
-  var ligne = L.polyline(points, { color: '#9333ea', weight: 5, opacity: 0.85 }).addTo(carte);
+  var ligne = L.polyline(points, { color: '#00826d', weight: 5, opacity: 0.85 }).addTo(carte);
 
   for (var k = 1; k < points.length - 1; k++) {
-    L.circleMarker(points[k], { radius: 4, color: '#9333ea', fillColor: '#fff', fillOpacity: 1, weight: 2 }).addTo(carte);
+    L.circleMarker(points[k], { radius: 4, color: '#00826d', fillColor: '#fff', fillOpacity: 1, weight: 2 }).addTo(carte);
   }
   L.circleMarker(points[0], { radius: 8, color: '#fff', fillColor: '#16a34a', fillOpacity: 1, weight: 3 })
     .bindTooltip(t.depart).addTo(carte);
