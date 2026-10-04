@@ -1,25 +1,75 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr-CA">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'none'; base-uri 'none'; form-action 'none'">
-  <meta name="robots" content="noindex">
-  <title>GeoGoose</title>
-  <link rel="stylesheet" href="leaflet/leaflet.css">
-  <link rel="stylesheet" href="style.css">
+    <meta name="description" content="GeoGoose aide les proches à partager une position et des alertes par SMS, selon les réglages de la personne qui porte le téléphone.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://geogoose.app/">
+    <title>GeoGoose | Veiller les uns sur les autres</title>
+    <link rel="stylesheet" href="presentation.css">
 </head>
 <body>
-  <header>
-    <img class="brand-logo" src="geogoose-logo.png" alt="" width="40" height="40">
-    <strong>GeoGoose</strong>
-    <span class="tagline" id="tagline"></span>
-    <span id="info"></span>
-    <a id="google" target="_blank" rel="noopener" hidden></a>
+  <header class="site-header">
+    <a class="wordmark" href="/" aria-label="GeoGoose">
+      <img src="geogoose-logo.png" alt="" width="40" height="40">
+      <span>GeoGoose</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <a href="#features" data-fr="Fonctionnalités" data-en="Features">Fonctionnalités</a>
+      <a href="/privacy/?lang=fr" data-lang-link="/privacy/" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
+    </nav>
+    <button class="language-toggle" type="button" data-lang-toggle aria-label="Switch to English">EN</button>
   </header>
-  <div id="map"></div>
-  <script src="leaflet/leaflet.js"></script>
-  <script src="app.js"></script>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <img class="hero-logo" src="geogoose-logo.png" alt="Logo GeoGoose" width="88" height="88">
+        <p class="eyebrow" data-fr="LA SÉCURITÉ, ENSEMBLE" data-en="SAFETY, TOGETHER">LA SÉCURITÉ, ENSEMBLE</p>
+        <h1>GeoGoose</h1>
+        <p class="hero-tagline" data-fr="Un texto, un honk. On veille les uns sur les autres." data-en="One text. One honk. Everyone looking out for each other.">Un texto, un honk. On veille les uns sur les autres.</p>
+        <p class="hero-description" data-fr="Partage de position et alertes par SMS entre proches, selon les réglages de la personne qui porte le téléphone." data-en="Location sharing and SMS alerts between people you trust, configured by the person carrying the phone.">Partage de position et alertes par SMS entre proches, selon les réglages de la personne qui porte le téléphone.</p>
+        <div class="hero-actions">
+          <a class="button button-light" href="#features" data-fr="Découvrir GeoGoose" data-en="Explore GeoGoose">Découvrir GeoGoose</a>
+          <a class="text-link" href="/privacy/?lang=fr" data-lang-link="/privacy/" data-fr="Lire la politique de confidentialité" data-en="Read the privacy policy">Lire la politique de confidentialité</a>
+        </div>
+        <p class="availability" data-fr="Version de test Android · Pas encore offerte sur Google Play" data-en="Android test build · Not yet available on Google Play">Version de test Android · Pas encore offerte sur Google Play</p>
+      </div>
+    </section>
+    <section class="intro section-wrap">
+      <p class="eyebrow eyebrow-green" data-fr="POUR LES PROCHES QUI SE FONT CONFIANCE" data-en="FOR PEOPLE WHO TRUST EACH OTHER">POUR LES PROCHES QUI SE FONT CONFIANCE</p>
+      <h2 data-fr="Rester en lien, sans ajouter un autre compte." data-en="Stay connected, without adding another account.">Rester en lien, sans ajouter un autre compte.</h2>
+      <p data-fr="GeoGoose utilise le GPS et les SMS du téléphone pour partager des nouvelles utiles avec des personnes choisies. L’app est conçue pour être configurée ouvertement avec la personne qui utilise l’appareil, pas pour suivre quelqu’un en secret." data-en="GeoGoose uses the phone’s GPS and SMS to share useful updates with chosen people. It is designed to be set up openly with the person using the device, not to track someone secretly.">GeoGoose utilise le GPS et les SMS du téléphone pour partager des nouvelles utiles avec des personnes choisies. L’app est conçue pour être configurée ouvertement avec la personne qui utilise l’appareil, pas pour suivre quelqu’un en secret.</p>
+    </section>
+    <section class="features section-wrap" id="features">
+      <div class="section-heading">
+        <p class="eyebrow eyebrow-green" data-fr="CE QUE FAIT L’APP" data-en="WHAT THE APP DOES">CE QUE FAIT L’APP</p>
+        <h2 data-fr="Des fonctions simples, réglées par vous." data-en="Useful features, configured by you.">Des fonctions simples, réglées par vous.</h2>
+      </div>
+      <div class="feature-list">
+        <article class="feature-row"><span class="feature-number">01</span><div><h3 data-fr="Suivi GPS par SMS" data-en="GPS updates by SMS">Suivi GPS par SMS</h3><p data-fr="Choisissez quand démarrer et arrêter le suivi, les destinataires et la fréquence des messages. Le GPS en arrière-plan nécessite les autorisations Android appropriées." data-en="Choose when tracking starts and stops, who receives updates, and how often messages are sent. Background GPS requires the relevant Android permissions.">Choisissez quand démarrer et arrêter le suivi, les destinataires et la fréquence des messages. Le GPS en arrière-plan nécessite les autorisations Android appropriées.</p></div></article>
+        <article class="feature-row"><span class="feature-number">02</span><div><h3>Ping</h3><p data-fr="Un contact autorisé peut envoyer le mot-clé configuré par SMS classique pour demander une position et le niveau de batterie, si Ping est activé." data-en="An authorized contact can text the configured keyword to request a location and battery level, when Ping is enabled.">Un contact autorisé peut envoyer le mot-clé configuré par SMS classique pour demander une position et le niveau de batterie, si Ping est activé.</p></div></article>
+        <article class="feature-row"><span class="feature-number">03</span><div><h3 data-fr="Points d’intérêt" data-en="Points of interest">Points d’intérêt</h3><p data-fr="Enregistrez des lieux sur l’appareil, retrouvez-les et partagez-les par SMS. Les cartes s’ouvrent dans Google Maps ou dans une carte de tracé GeoGoose." data-en="Save places on the device, find them later, and share them by SMS. Open maps in Google Maps or a GeoGoose route view.">Enregistrez des lieux sur l’appareil, retrouvez-les et partagez-les par SMS. Les cartes s’ouvrent dans Google Maps ou dans une carte de tracé GeoGoose.</p></div></article>
+        <article class="feature-row"><span class="feature-number">04</span><div><h3 data-fr="Filtre d’appels" data-en="Call screening">Filtre d’appels</h3><p data-fr="Sur Android compatible, configurez une liste locale de contacts autorisés pour le filtrage des appels entrants." data-en="On supported Android devices, configure an on-device list of allowed contacts for incoming call screening.">Sur Android compatible, configurez une liste locale de contacts autorisés pour le filtrage des appels entrants.</p></div></article>
+      </div>
+    </section>
+    <section class="trust-band">
+      <div class="section-wrap trust-content">
+        <p class="eyebrow" data-fr="PARTAGE CHOISI, PAS UNE PROMESSE D’URGENCE" data-en="OPT-IN SHARING, NOT AN EMERGENCY SERVICE">PARTAGE CHOISI, PAS UNE PROMESSE D’URGENCE</p>
+        <h2 data-fr="Les proches choisissent quoi partager et avec qui." data-en="People choose what to share and with whom.">Les proches choisissent quoi partager et avec qui.</h2>
+        <p data-fr="Les SMS dépendent du réseau et de l’opérateur; leur livraison n’est pas garantie et des frais peuvent s’appliquer. GeoGoose ne remplace pas les services d’urgence." data-en="SMS depends on network and carrier availability; delivery is not guaranteed and carrier fees may apply. GeoGoose is not a replacement for emergency services.">Les SMS dépendent du réseau et de l’opérateur; leur livraison n’est pas garantie et des frais peuvent s’appliquer. GeoGoose ne remplace pas les services d’urgence.</p>
+      </div>
+    </section>
+    <section class="privacy-cta section-wrap">
+      <div><p class="eyebrow eyebrow-green" data-fr="TRANSPARENCE" data-en="TRANSPARENCY">TRANSPARENCE</p><h2 data-fr="Comprendre les données avant d’activer les fonctions." data-en="Understand the data before enabling features.">Comprendre les données avant d’activer les fonctions.</h2></div>
+      <a class="button button-dark" href="/privacy/?lang=fr" data-lang-link="/privacy/" data-fr="Politique de confidentialité" data-en="Privacy policy">Politique de confidentialité</a>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a class="wordmark" href="/"><img src="geogoose-logo.png" alt="" width="32" height="32"><span>GeoGoose</span></a>
+    <p data-fr="Développé au Québec, pour les proches qui choisissent de rester en lien." data-en="Developed in Québec for people who choose to stay connected.">Développé au Québec, pour les proches qui choisissent de rester en lien.</p>
+    <a href="/privacy/?lang=fr" data-lang-link="/privacy/" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
+  </footer>
+  <script src="presentation.js" defer></script>
 </body>
 </html>
