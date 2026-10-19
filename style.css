@@ -1,7 +1,16 @@
 :root {
+  color-scheme: light;
+  --brand-primary: #0067c5;
+  --brand-mint: #e5f3ff;
+  --brand-ink: #082a50;
+  --brand-surface: #f5faff;
+}
+
+:root[data-palette="classic"] {
   --brand-primary: #00826d;
   --brand-mint: #ddf8ef;
   --brand-ink: #052d26;
+  --brand-surface: #f4faf8;
 }
 
 html, body {
@@ -13,6 +22,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  background: var(--brand-surface);
 }
 
 header {
@@ -28,7 +38,7 @@ header {
 }
 
 header a {
-  margin-left: auto;
+  margin-inline-start: auto;
   color: var(--brand-primary);
   font-weight: 600;
 }
@@ -58,13 +68,63 @@ header a:focus-visible {
   }
 
   header a {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 }
 
 #map {
   flex: 1;
   min-height: 200px;
+}
+
+#route-options, #map-status {
+  padding: 10px 14px;
+  margin: 0;
+  background: var(--brand-surface);
+  color: var(--brand-ink);
+}
+
+#route-note {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+#google-routes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 25vh;
+  overflow: auto;
+}
+
+#google-routes a {
+  padding: 10px;
+  color: var(--brand-ink);
+  border: 1px solid var(--brand-primary);
+  border-radius: 8px;
+}
+
+.map-setting {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 6px 12px;
+  color: var(--brand-ink);
+}
+
+.map-setting select {
+  padding: 10px;
+  border: 1px solid var(--brand-primary);
+  border-radius: 8px;
+  background: white;
+  color: var(--brand-ink);
+  font: inherit;
+}
+
+select:focus-visible, #google-routes a:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 3px;
 }
 
 .message {
