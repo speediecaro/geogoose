@@ -23,3 +23,8 @@ Serve this directory with a local static HTTP server, then open
 `tests/map.html`. The result reports PASS or FAIL. Checks cover all languages,
 English fallback, driving/walking URL parameters, ordered waypoint coverage,
 the mobile waypoint limit, and the fixed blue palette.
+
+The dark presentation and privacy-page preview uses the app's navy backgrounds,
+cyan accents and rounded controls, without changing the policy text.
+Open `tests/presentation.html` to check French/English navigation, mobile and
+desktop overflow, and text contrast before approving publication.
