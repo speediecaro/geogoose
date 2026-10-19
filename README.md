@@ -14,14 +14,12 @@ compatibility. Consecutive parts share an endpoint and retain every transmitted
 point in order. Google recalculates a route; it is not the exact GPS trace.
 The viewer cannot recover points omitted from the original link.
 
-Blue is the default map palette. Use the Colors selector to restore Classic
-colors immediately, or add `palette=classic` to the query string. The setting
-stays in the URL on reload, and includes route line and point-outline colors.
-It does not change the public presentation page.
+GeoGoose blue is the only map palette, including the route line and point
+outlines. Older links with a `palette` query parameter also use blue.
 
 ## Browser checks
 
 Serve this directory with a local static HTTP server, then open
 `tests/map.html`. The result reports PASS or FAIL. Checks cover all languages,
 English fallback, driving/walking URL parameters, ordered waypoint coverage,
-the mobile waypoint limit, and reversible palettes.
+the mobile waypoint limit, and the fixed blue palette.

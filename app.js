@@ -105,38 +105,23 @@
     : (supportedLanguage(navigator.language) || 'en');
   var t = translations[language];
   var controls = {
-    fr: ['Mode de déplacement', 'En voiture', 'À pied', 'Couleurs', 'Bleu GeoGoose', 'Anciennes couleurs'],
-    en: ['Travel mode', 'Driving', 'Walking', 'Colors', 'GeoGoose blue', 'Classic colors'],
-    it: ['Modalità di viaggio', 'In auto', 'A piedi', 'Colori', 'Blu GeoGoose', 'Colori precedenti'],
-    es: ['Modo de viaje', 'En coche', 'A pie', 'Colores', 'Azul GeoGoose', 'Colores anteriores'],
-    de: ['Fortbewegung', 'Mit dem Auto', 'Zu Fuß', 'Farben', 'GeoGoose-Blau', 'Bisherige Farben'],
-    pt: ['Modo de deslocação', 'De carro', 'A pé', 'Cores', 'Azul GeoGoose', 'Cores anteriores'],
-    hi: ['यात्रा का तरीका', 'कार से', 'पैदल', 'रंग', 'GeoGoose नीला', 'पुराने रंग'],
-    ar: ['وسيلة التنقل', 'بالسيارة', 'سيرًا على الأقدام', 'الألوان', 'أزرق GeoGoose', 'الألوان السابقة'],
-    id: ['Mode perjalanan', 'Berkendara', 'Berjalan kaki', 'Warna', 'Biru GeoGoose', 'Warna sebelumnya'],
-    vi: ['Phương thức di chuyển', 'Ô tô', 'Đi bộ', 'Màu sắc', 'Xanh GeoGoose', 'Màu cũ']
+    fr: ['Mode de déplacement', 'En voiture', 'À pied'],
+    en: ['Travel mode', 'Driving', 'Walking'],
+    it: ['Modalità di viaggio', 'In auto', 'A piedi'],
+    es: ['Modo de viaje', 'En coche', 'A pie'],
+    de: ['Fortbewegung', 'Mit dem Auto', 'Zu Fuß'],
+    pt: ['Modo de deslocação', 'De carro', 'A pé'],
+    hi: ['यात्रा का तरीका', 'कार से', 'पैदल'],
+    ar: ['وسيلة التنقل', 'بالسيارة', 'سيرًا على الأقدام'],
+    id: ['Mode perjalanan', 'Berkendara', 'Berjalan kaki'],
+    vi: ['Phương thức di chuyển', 'Ô tô', 'Đi bộ']
   }[language];
-  ['travel-label', 'travel-driving', 'travel-walking', 'palette-label', 'palette-blue', 'palette-classic']
+  ['travel-label', 'travel-driving', 'travel-walking']
     .forEach(function (id, index) { document.getElementById(id).textContent = controls[index]; });
   document.documentElement.lang = language;
   document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   document.getElementById('map').dir = 'ltr';
   document.getElementById('tagline').textContent = t.tagline;
-  var palette = document.getElementById('palette');
-  palette.value = new URLSearchParams(location.search).get('palette') === 'classic' ? 'classic' : 'blue';
-  var routeLayers = [];
-  function applyPalette() {
-    document.documentElement.dataset.palette = palette.value;
-    var color = getComputedStyle(document.documentElement).getPropertyValue('--brand-primary').trim();
-    routeLayers.forEach(function (layer) { layer.setStyle({ color: color }); });
-  }
-  applyPalette();
-  palette.addEventListener('change', function () {
-    applyPalette();
-    var url = new URL(location.href);
-    url.searchParams.set('palette', palette.value);
-    history.replaceState(null, '', url);
-  });
 
   // Même algorithme que l'app : "encoded polyline" (précision 1e5) avec alphabet base64url.
   var ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -241,10 +226,9 @@
 
   var routeColor = getComputedStyle(document.documentElement).getPropertyValue('--brand-primary').trim();
   var ligne = L.polyline(points, { color: routeColor, weight: 5, opacity: 0.85 }).addTo(carte);
-  routeLayers.push(ligne);
 
   for (var k = 1; k < points.length - 1; k++) {
-    routeLayers.push(L.circleMarker(points[k], { radius: 4, color: routeColor, fillColor: '#fff', fillOpacity: 1, weight: 2 }).addTo(carte));
+    L.circleMarker(points[k], { radius: 4, color: routeColor, fillColor: '#fff', fillOpacity: 1, weight: 2 }).addTo(carte);
   }
   L.circleMarker(points[0], { radius: 8, color: '#fff', fillColor: '#16a34a', fillOpacity: 1, weight: 3 })
     .bindTooltip(t.depart).addTo(carte);

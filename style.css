@@ -6,13 +6,6 @@
   --brand-surface: #f5faff;
 }
 
-:root[data-palette="classic"] {
-  --brand-primary: #00826d;
-  --brand-mint: #ddf8ef;
-  --brand-ink: #052d26;
-  --brand-surface: #f4faf8;
-}
-
 html, body {
   margin: 0;
   height: 100%;

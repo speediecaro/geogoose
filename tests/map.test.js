@@ -76,22 +76,16 @@
           check(Math.abs(coords[1] - (-73.57 + (index % 3) * 0.001)) < 0.000001, 'Longitude order');
         });
       }
-      var palette = doc.getElementById('palette');
       check(win.getComputedStyle(doc.documentElement).getPropertyValue('--brand-primary').trim() === '#0067c5', 'Blue default');
-      palette.value = 'classic';
-      palette.dispatchEvent(new win.Event('change'));
-      check(win.getComputedStyle(doc.documentElement).getPropertyValue('--brand-primary').trim() === '#00826d', 'Classic palette');
-      check(win.location.search.includes('palette=classic'), 'Palette preserved in URL');
+      check(doc.getElementById('palette') === null, 'No palette selector');
       var colors = Array.from(doc.querySelectorAll('.leaflet-overlay-pane path')).map(function (path) {
         return path.getAttribute('stroke');
       });
-      check(colors.includes('#00826d'), 'Route color restored');
-      palette.value = 'blue';
-      palette.dispatchEvent(new win.Event('change'));
-      check(win.getComputedStyle(doc.documentElement).getPropertyValue('--brand-primary').trim() === '#0067c5', 'Blue restored');
+      check(colors.includes('#0067c5'), 'Blue route color');
     }
     await load('fr', '&palette=classic');
-    check(frame.contentDocument.documentElement.dataset.palette === 'classic', 'Classic reload');
+    check(frame.contentWindow.getComputedStyle(frame.contentDocument.documentElement)
+      .getPropertyValue('--brand-primary').trim() === '#0067c5', 'Legacy palette URL remains blue');
     for (var pointCount of [10, 40]) {
       var expected = Array.from({ length: pointCount }, function (_, i) {
         return [Number((45.5 + i * 0.001).toFixed(5)), Number((-73.57 + (i % 3) * 0.001).toFixed(5))];
