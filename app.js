@@ -122,6 +122,19 @@
   document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   document.getElementById('map').dir = 'ltr';
   document.getElementById('tagline').textContent = t.tagline;
+  var layoutLabels = {
+    fr: ['Liens Google Maps', 'Agrandir la carte', 'Réduire la carte'],
+    en: ['Google Maps links', 'Expand map', 'Reduce map'],
+    it: ['Link Google Maps', 'Espandi la mappa', 'Riduci la mappa'],
+    es: ['Enlaces de Google Maps', 'Ampliar el mapa', 'Reducir el mapa'],
+    de: ['Google Maps-Links', 'Karte vergrößern', 'Karte verkleinern'],
+    pt: ['Links do Google Maps', 'Ampliar o mapa', 'Reduzir o mapa'],
+    hi: ['Google Maps लिंक', 'नक्शा बड़ा करें', 'नक्शा छोटा करें'],
+    ar: ['روابط Google Maps', 'توسيع الخريطة', 'تصغير الخريطة'],
+    id: ['Tautan Google Maps', 'Perluas peta', 'Perkecil peta'],
+    vi: ['Liên kết Google Maps', 'Mở rộng bản đồ', 'Thu nhỏ bản đồ']
+  }[language];
+  document.getElementById('google-summary').textContent = layoutLabels[0];
 
   // Même algorithme que l'app : "encoded polyline" (précision 1e5) avec alphabet base64url.
   var ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -180,6 +193,7 @@
 
   // Trois étapes intermédiaires sont compatibles avec les navigateurs mobiles.
   if (points.length > 1) {
+    document.getElementById('google-options').hidden = false;
     var routes = document.getElementById('google-routes');
     var total = Math.ceil((points.length - 1) / 4);
     document.getElementById('route-note').textContent = t.routeNote;
@@ -216,6 +230,31 @@
     return;
   }
   var carte = L.map('map', { zoomControl: false });
+  var expandMap = document.getElementById('expand-map');
+  expandMap.hidden = false;
+  expandMap.textContent = layoutLabels[1];
+  function setExpanded(expanded) {
+    document.body.classList.toggle('map-expanded', expanded);
+    ['header', '#google-options', '#map-status'].forEach(function (selector) {
+      document.querySelector(selector).inert = expanded;
+    });
+    expandMap.setAttribute('aria-expanded', String(expanded));
+    expandMap.textContent = layoutLabels[expanded ? 2 : 1];
+    carte.invalidateSize({ pan: false });
+  }
+  expandMap.addEventListener('click', function () {
+    setExpanded(expandMap.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && expandMap.getAttribute('aria-expanded') === 'true') {
+      setExpanded(false);
+      expandMap.focus();
+    }
+  });
+  var mapResize = new ResizeObserver(function () {
+    carte.invalidateSize({ pan: false });
+  });
+  mapResize.observe(document.getElementById('map'));
   L.control.zoom({ zoomInTitle: t.zoomIn, zoomOutTitle: t.zoomOut }).addTo(carte);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,

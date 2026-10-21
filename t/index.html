@@ -18,19 +18,29 @@
     <span id="info"></span>
     <a id="google" target="_blank" rel="noopener" hidden></a>
   </header>
-  <section id="route-options" hidden>
-    <p id="route-note"></p>
-    <label class="map-setting">
-      <span id="travel-label"></span>
-      <select id="travel-mode" aria-describedby="route-note">
-        <option value="driving" id="travel-driving"></option>
-        <option value="walking" id="travel-walking"></option>
-      </select>
-    </label>
-    <nav id="google-routes" aria-describedby="route-note"></nav>
-  </section>
+  <details id="google-options" hidden>
+    <summary id="google-summary"></summary>
+    <div class="google-content">
+      <section id="route-options" hidden>
+        <p id="route-note"></p>
+        <label class="map-setting">
+          <span id="travel-label"></span>
+          <select id="travel-mode" aria-describedby="route-note">
+            <option value="driving" id="travel-driving"></option>
+            <option value="walking" id="travel-walking"></option>
+          </select>
+        </label>
+        <nav id="google-routes" aria-describedby="route-note"></nav>
+      </section>
+    </div>
+  </details>
   <p id="map-status" role="status" hidden></p>
-  <div id="map"></div>
+  <div id="map-view">
+    <div class="map-toolbar">
+      <button id="expand-map" type="button" aria-controls="map-view" aria-expanded="false" hidden></button>
+    </div>
+    <div id="map"></div>
+  </div>
   <script src="../leaflet/leaflet.js"></script>
   <script src="../app.js"></script>
 </body>
