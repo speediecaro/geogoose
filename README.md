@@ -42,8 +42,11 @@ the mobile waypoint limit, the fixed blue palette, collapsed Google links,
 and mobile map expansion/restoration.
 
 The dark presentation and privacy page use the app's navy backgrounds,
-cyan accents and rounded controls. The policy was updated on October 21, 2026
-for version 3.5.1, build 32: local trip history, pauses, offline PDF/CSV exports,
+cyan accents and rounded controls. The policy was updated on October 22, 2026
+for version 3.5.2, build 33: exact caller matching using the SIM or network
+country, dialed numbers kept locally for 24 hours as allowed callbacks while
+call blocking is enabled, and a 24-hour window allowing all calls after an
+emergency call. Earlier updates cover local trip history, pauses, offline PDF/CSV exports,
 selective trip/POI/photo sharing, deletion of independent copies, and per-feature
 operator SMS charge consent including history-only tracking without SMS.
 It also describes saved capture cadence, optional cumulative SMS duration,
