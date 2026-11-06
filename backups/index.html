@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GeoGoose Backups : outil administratif privé de sauvegarde chiffrée vers Google Drive avec rclone.">
+  <link rel="canonical" href="https://geogoose.app/backups/">
+  <link rel="stylesheet" href="../presentation.css">
+  <title>GeoGoose Backups</title>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="/" aria-label="GeoGoose">
+      <img src="../geogoose-logo.png" alt="" width="40" height="40"><span>GeoGoose</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <a href="/backups/">GeoGoose Backups</a>
+      <a href="/backups/privacy/">Confidentialité des sauvegardes</a>
+    </nav>
+  </header>
+  <main class="privacy-main section-wrap">
+    <p class="eyebrow">OUTIL ADMINISTRATIF PRIVÉ</p>
+    <h1>GeoGoose Backups</h1>
+    <p>GeoGoose Backups est un outil utilisé par l’administrateur de GeoGoose pour conserver et vérifier des copies chiffrées de sauvegardes de serveur dans son propre Google Drive. Il utilise rclone pour les transferts et age pour le chiffrement avant l’envoi.</p>
+    <h2>Pourquoi une autorisation Google Drive ?</h2>
+    <p>L’administrateur autorise explicitement l’outil par Google OAuth. L’autorisation demandée est <code>https://www.googleapis.com/auth/drive.file</code> : elle permet de créer et de gérer les fichiers autorisés pour cet outil, sans demander un accès général à tous les fichiers du compte.</p>
+    <p>Cette autorisation sert à déposer les sauvegardes chiffrées et à récupérer une copie pour en vérifier l’intégrité ou effectuer une restauration. Elle n’autorise pas l’accès au mot de passe Google.</p>
+    <h2>À qui cet outil est-il destiné ?</h2>
+    <p>Il est réservé à l’administration de GeoGoose. Ce n’est pas une fonctionnalité de connexion Google destinée aux utilisateurs de l’application Android, ni un service de sauvegarde de leurs téléphones. Aucun accès à leur Google Drive n’est demandé par cet outil.</p>
+    <p>Cette page présente l’outil ; elle ne contient aucun fichier de sauvegarde et ne propose pas de connexion publique. Les fichiers Drive doivent rester privés et la clé privée de déchiffrement doit être conservée séparément.</p>
+    <h2>Responsable et contact</h2>
+    <p>GeoGoose · CaroDuNord · Québec, Canada.<br>Assistance : <a href="mailto:geogoose2026@gmail.com">geogoose2026@gmail.com</a>.</p>
+    <p>Consultez les <a href="/backups/privacy/">règles de confidentialité de GeoGoose Backups</a> pour les données traitées, la conservation et la révocation de l’autorisation.</p>
+    <p>La <a href="/privacy/">politique de confidentialité de l’application GeoGoose</a> est distincte.</p>
+  </main>
+</body>
+</html>

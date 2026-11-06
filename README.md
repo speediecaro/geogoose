@@ -1,5 +1,14 @@
 # GeoGoose website
 
+## Administrative backup OAuth pages
+
+`backups/index.html` and `backups/privacy/index.html` describe the private
+GeoGoose Backups tool and its limited Google Drive `drive.file` authorization.
+They are separate from the Android app privacy policy and contain no backup
+files, credentials, or public sign-in flow. Use their HTTPS URLs in the Google
+OAuth branding configuration; domain ownership verification remains a separate
+Google Console step.
+
 The route viewer is served from `t/index.html`. Coordinates stay in the URL
 fragment until a visitor chooses a Google Maps link. OpenStreetMap supplies map
 tiles; Google Maps links remain available when tiles or Leaflet cannot load.

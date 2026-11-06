@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Règles de confidentialité de GeoGoose Backups : autorisation Drive limitée, sauvegardes chiffrées et révocation.">
+  <link rel="canonical" href="https://geogoose.app/backups/privacy/">
+  <link rel="stylesheet" href="../../presentation.css">
+  <title>Confidentialité | GeoGoose Backups</title>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="/" aria-label="GeoGoose">
+      <img src="../../geogoose-logo.png" alt="" width="40" height="40"><span>GeoGoose</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <a href="/backups/">GeoGoose Backups</a>
+      <a href="/backups/privacy/">Confidentialité des sauvegardes</a>
+    </nav>
+  </header>
+  <main class="privacy-main section-wrap">
+    <h1>Règles de confidentialité de GeoGoose Backups</h1>
+    <p>Mise à jour : 6 novembre 2026.</p>
+    <h2>Responsable et portée</h2>
+    <p>GeoGoose Backups est un outil administratif privé exploité par GeoGoose · CaroDuNord, au Québec, Canada. Contact : <a href="mailto:geogoose2026@gmail.com">geogoose2026@gmail.com</a>.</p>
+    <p>Ces règles concernent l’autorisation Google Drive de l’administrateur et les sauvegardes de serveur. Elles ne remplacent pas la <a href="/privacy/">politique de confidentialité de l’application Android GeoGoose</a>. Cet outil ne demande pas l’accès au Drive des utilisateurs de l’application.</p>
+    <h2>Données Google accessibles</h2>
+    <p>Le périmètre OAuth demandé est <code>https://www.googleapis.com/auth/drive.file</code>. L’outil peut créer et gérer les dossiers et fichiers autorisés pour cette application, lire leurs métadonnées (notamment noms, identifiants et tailles) et récupérer leur contenu chiffré pour une vérification ou une restauration. Il ne demande pas un accès général aux autres fichiers du compte.</p>
+    <p>Après consentement, rclone conserve des jetons OAuth permettant cet accès et son renouvellement dans sa configuration privée sur le serveur. Le mot de passe Google n’est pas collecté par GeoGoose Backups.</p>
+    <h2>Utilisation des données</h2>
+    <p>Les accès servent uniquement à envoyer, vérifier, récupérer et gérer la conservation des sauvegardes administratives. Les données Google ne sont ni vendues, ni utilisées pour la publicité, le profilage ou l’entraînement de modèles d’intelligence artificielle.</p>
+    <p>Les sauvegardes sont chiffrées avec age avant leur envoi. La clé privée de récupération est conservée séparément du serveur d’envoi et du dossier Drive des sauvegardes. Le chiffrement du contenu ne masque pas nécessairement les métadonnées, telles que le nom et la taille du fichier.</p>
+    <h2>Stockage, accès et prestataires</h2>
+    <p>Google traite l’authentification, les requêtes API et le stockage Drive selon ses propres conditions et règles de confidentialité. rclone et age sont les logiciels utilisés pour le transfert et le chiffrement ; leur utilisation ne signifie pas que leurs développeurs reçoivent les sauvegardes.</p>
+    <p>Les fichiers restent dans des dossiers Drive privés, sans lien public. L’administrateur autorisé peut récupérer les fichiers ; le déchiffrement nécessite la clé privée ou, pour les anciennes sauvegardes concernées, la phrase secrète. Une copie chiffrée peut également être conservée sur les appareils administratifs.</p>
+    <p>Les journaux techniques peuvent contenir des noms de fichiers, des dates, des tailles et des résultats de transfert. Les jetons, secrets et contenus déchiffrés ne doivent pas être publiés dans les journaux ou sur ce site.</p>
+    <h2>Conservation et suppression</h2>
+    <p>Les copies de test sont conservées jusqu’à leur suppression par l’administrateur. Pour les sauvegardes récurrentes, la durée de conservation est définie dans la configuration opérationnelle selon les besoins de récupération et les obligations applicables. La suppression d’une copie ne supprime pas automatiquement les autres copies locales ou distantes.</p>
+    <p>L’administrateur peut supprimer les fichiers dans Drive, vider la corbeille si nécessaire et supprimer les copies conservées sur ses appareils. Pour toute question ou demande liée aux données, contactez <a href="mailto:geogoose2026@gmail.com">geogoose2026@gmail.com</a>.</p>
+    <h2>Révoquer l’autorisation</h2>
+    <p>L’administrateur peut retirer l’accès de GeoGoose Backups dans les <a href="https://myaccount.google.com/connections">connexions tierces de son compte Google</a>. Il doit également arrêter les tâches utilisant cette autorisation et supprimer les jetons de la configuration rclone lorsqu’ils ne sont plus nécessaires.</p>
+    <p>La révocation n’efface pas les sauvegardes déjà créées. Elle peut empêcher l’outil d’y accéder ; leur suppression reste possible depuis le compte Google propriétaire.</p>
+    <h2>Engagement relatif aux données Google</h2>
+    <p>L’utilisation et tout transfert des informations reçues des API Google respectent la <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, notamment les exigences de Limited Use.</p>
+    <p><a href="/backups/">Retour à la présentation de GeoGoose Backups</a>.</p>
+  </main>
+</body>
+</html>
