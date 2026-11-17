@@ -72,6 +72,17 @@
       var legend = doc.getElementById('map-legend');
       check(!legend.hidden && !legend.open, 'Legend available and collapsed by default');
       check(doc.getElementById('legend-summary').textContent.length > 0, 'Localized legend title');
+      var colorScheme = win.getComputedStyle(doc.documentElement).colorScheme.split(/\s+/);
+      check(colorScheme.includes('only') && colorScheme.includes('light'),
+        'Viewer opts out of automatic darkening to preserve map colors');
+      check(doc.querySelector('meta[name="color-scheme"]').content === 'only light',
+        'Light-only scheme is declared before stylesheet loading');
+      [['water', 'rgb(170, 211, 223)'], ['forest', 'rgb(174, 209, 160)'],
+        ['wetland', 'rgb(135, 197, 178)'], ['building', 'rgb(217, 208, 201)'],
+        ['sand', 'rgb(237, 221, 168)']].forEach(function (entry) {
+        check(win.getComputedStyle(doc.querySelector('.legend-' + entry[0])).backgroundColor === entry[1],
+          'Legend preserves map color for ' + entry[0]);
+      });
       check(doc.querySelectorAll('#route-legend li').length === 4, 'Legend explains every GPS symbol');
       check(doc.getElementById('basemap-legend').hidden, 'World palette hidden on OSM fallback');
       doc.getElementById('legend-summary').click();

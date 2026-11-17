@@ -31,6 +31,11 @@ The map can fill the viewport using its expand button and return to the normal
 layout using the same button or Escape. Leaflet resizes without resetting the
 current route or zoom.
 
+The viewer declares `color-scheme: only light` in CSS and an early HTML meta
+tag to opt out of browser automatic darkening. The map uses a light palette,
+so its HTML legend must retain matching colors even with a dark system theme.
+Browser extensions or accessibility overrides may still alter rendering.
+
 The collapsible legend beside the expand button explains the GPS trace and
 position markers in all ten viewer languages. It remains accessible in expanded
 view, scrolls independently and does not reduce the map height. World-map color
