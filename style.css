@@ -220,6 +220,10 @@ header a:focus-visible {
 .legend-pitch { background: #8ed7b8; border-color: #60ad91; }
 .legend-address { border: 0; color: #514b47; text-align: center; }
 .legend-address::before { content: '123'; }
+.legend-qc-building { background: #d9c7e9; border-color: #622e91; }
+.legend-qc-address { border: 0; color: #622e91; text-align: center; }
+.legend-qc-address::before { content: '123'; }
+#basemap-legend .legend-regional-note { grid-column: 1 / -1; display: block; line-height: 1.4; }
 .legend-route, .legend-trail, .legend-cycleway, .legend-track, .legend-boundary { height: 0; border: 0; border-top: 3px solid var(--brand-primary); border-radius: 0; }
 .legend-trail { border-top: 2px dashed #bd665c; }
 .legend-cycleway { border-top: 2px dashed #4b84b5; }

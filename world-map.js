@@ -2,6 +2,7 @@
 
 window.geoGooseWorldMap = (function () {
   var archiveUrl = 'https://world-maps.geogoose.app/file/geogoose-maps-world/20261115.pmtiles';
+  var regionalUrl = new URL('maps/antoine-labelle-20261117.pmtiles', new URL('.', document.currentScript.src)).href;
   var messages = {
     fr: {
       loading: 'Chargement de la carte mondiale…',
@@ -112,7 +113,8 @@ window.geoGooseWorldMap = (function () {
     var status = document.getElementById('map-status');
     var fallbackButton = document.getElementById('map-fallback');
     var basemapLegend = document.getElementById('basemap-legend');
-    var attribution = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>';
+    var attribution = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>' +
+      ' | &copy; Gouvernement du Québec — <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>';
     var cloud = null;
     var cloudContainer = null;
     var switched = false;
@@ -191,9 +193,10 @@ window.geoGooseWorldMap = (function () {
         }
       });
 
-      var protocol = new pmtiles.Protocol();
-      protocol.add(new pmtiles.PMTiles(archiveUrl));
-      maplibregl.addProtocol('pmtiles', protocol.tile);
+      if (!window.geoGooseRegionalMap) throw new Error('Le lecteur des données québécoises est introuvable.');
+      maplibregl.addProtocol('geogoose', geoGooseRegionalMap.createProtocol(
+        new pmtiles.PMTiles(archiveUrl), new pmtiles.PMTiles(regionalUrl)
+      ));
 
       cloudContainer = document.createElement('div');
       cloudContainer.className = 'world-map-cloud leaflet-zoom-animated';
@@ -213,8 +216,10 @@ window.geoGooseWorldMap = (function () {
           sources: {
             'geo-map': {
               type: 'vector',
-              url: 'pmtiles://' + archiveUrl,
-              attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>'
+              tiles: ['geogoose://{z}/{x}/{y}'],
+              minzoom: 0,
+              maxzoom: 15,
+              attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a> | © Gouvernement du Québec — CC BY 4.0'
             }
           },
           layers: geoGooseMapStyle.createLayers(language)

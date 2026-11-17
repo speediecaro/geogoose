@@ -1,0 +1,22 @@
+{
+  "name": "geogoose-mrc-preview-tools",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node build.mjs",
+    "validate": "node validate.mjs",
+    "start": "node server.mjs",
+    "test": "node --test test.mjs protocol.test.mjs"
+  },
+  "dependencies": {
+    "@mapbox/vector-tile": "2.0.4",
+    "@turf/area": "7.3.0",
+    "@turf/intersect": "7.3.0",
+    "geojson-vt": "4.0.2",
+    "pbf": "4.0.1",
+    "pmtiles": "4.2.1",
+    "rbush": "4.0.1",
+    "vt-pbf": "3.1.3"
+  }
+}

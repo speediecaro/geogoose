@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="only light">
+  <meta name="robots" content="noindex,nofollow">
+  <title>GeoGoose — MRC complète, aperçu tuilé</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.1/dist/maplibre-gl.css">
+  <style>
+    :root { color-scheme: only light; font-family: system-ui, sans-serif; color: #082a50; background: #f4f9fd; }
+    body { margin: 0; }
+    header { padding: 12px; }
+    h1 { font-size: 1.15rem; margin: 0 0 8px; }
+    p { margin: 8px 0; }
+    nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    button, label { min-height: 44px; font: inherit; }
+    button { padding: 6px 12px; cursor: pointer; }
+    label { display: inline-flex; align-items: center; gap: 6px; }
+    #map { height: 65vh; min-height: 340px; }
+    #status { font-weight: 600; }
+    summary { cursor: pointer; padding: 8px 0; }
+    .maplibregl-popup-content { max-height: 45vh; overflow-y: auto; overflow-wrap: anywhere; color: #082a50; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">MRC complète — aperçu tuilé</h1>
+    <p>Aperçu local uniquement. Aucune modification du site public.</p>
+    <nav aria-label="Lieux et comparaison">
+      <button data-place="all">Toute la MRC</button>
+      <button data-place="laurier">Mont-Laurier</button>
+      <button data-place="rouge">Rivière-Rouge</button>
+      <button data-place="laus">Notre-Dame-du-Laus</button>
+      <label><input id="official" type="checkbox" checked> Adresses et bâtiments québécois</label>
+    </nav>
+    <p id="status" role="status">Chargement…</p>
+    <details>
+      <summary>Légende, sources et limites de cet essai</summary>
+      <p>Violet : bâtiments et numéros québécois. Pointillés violets : limite administrative de la MRC,
+        pas une limite de propriété. Les bâtiments OSM sans correspondance sont conservés en gris.</p>
+      <p>La priorité québécoise s'applique aux contours dont le chevauchement atteint 35 % du plus petit
+        bâtiment, et aux numéros identiques distants de 20 m ou moins. Ce rapprochement géométrique
+        reste expérimental : il ne prouve pas l'identité des lieux. Les divergences éloignées restent visibles.</p>
+      <p>Les bâtiments apparaissent au zoom 12, les adresses au zoom 14; la place disponible peut masquer
+        des numéros. Touchez un élément violet pour sa source et sa qualité.</p>
+      <p id="inventory"></p>
+      <p>© Gouvernement du Québec — RQA, Référentiel québécois sur les bâtiments et Découpages administratifs,
+        <a href="https://creativecommons.org/licenses/by/4.0/deed.fr">CC BY 4.0</a>.
+        Attributs réduits et logements regroupés; aucune donnée d'occupant.
+        Une publication récente ne garantit pas des photos récentes ni une précision d'arpentage.</p>
+      <p>Fond : archive mondiale GeoGoose dérivée d'OpenStreetMap. Un serveur local lit cette même archive
+        par plages d'octets et rapproche les tuiles. Il ne modifie ni l'archive ni les permissions du serveur public.
+        Aucun repli raster ne masque une erreur; la carte signale toute indisponibilité.</p>
+    </details>
+  </header>
+  <main id="map" aria-label="Carte de la MRC"></main>
+  <script src="https://unpkg.com/maplibre-gl@5.0.1/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@protomaps/basemaps@5.7.2/dist/basemaps.js"></script>
+  <script src="/world-map-style.js"></script>
+  <script src="/mrc-preview.js"></script>
+</body>
+</html>

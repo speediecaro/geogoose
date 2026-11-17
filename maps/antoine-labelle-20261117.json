@@ -1,0 +1,34 @@
+{
+  "complete": true,
+  "mrcCode": "79",
+  "mrcName": "Antoine-Labelle",
+  "archive": "antoine-labelle-20261117.pmtiles",
+  "archiveBytes": 23362662,
+  "archiveSha256": "917e0ef5061943e82402d42051819d658a3a6672aeb422a4a4bdcc25239bf43d",
+  "extractedUtc": "2026-11-17",
+  "tileCount": 6671,
+  "minZoom": 12,
+  "maxZoom": 15,
+  "addressMinZoom": 14,
+  "sourceAddressRecords": 32879,
+  "groupedAddressPoints": 29291,
+  "buildingFootprints": 41202,
+  "versions": {
+    "addresses": "2026-11-01",
+    "buildings": "BATI20260601",
+    "boundary": "V2026-10",
+    "worldArchive": "20261115.pmtiles"
+  },
+  "sources": {
+    "addresses": "https://servicescarto.mrnf.gouv.qc.ca/pes/rest/services/Territoire/RQA/MapServer/0/query",
+    "buildings": "https://servicesvecto3.mern.gouv.qc.ca/geoserver/ReferentielBatiment_Pub/wfs",
+    "boundary": "https://servicescarto.mrnf.gouv.qc.ca/pes/rest/services/Territoire/SDA_WMS/MapServer"
+  },
+  "attribution": "Government of Quebec: RQA, Quebec Building Reference and SDA, CC BY 4.0; OpenStreetMap contributors, ODbL 1.0",
+  "licenses": [
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://www.openstreetmap.org/copyright"
+  ],
+  "processing": "Full merged world tiles; matched OSM buildings removed at >=35% overlap of smaller footprint; equal normalized address numbers removed within 20 m. Unmatched world features retained. Sparse missing tiles use the original world archive.",
+  "limitations": "Source dates and positional quality vary. Not a survey or a guarantee of exhaustive real-world coverage. Antoine-Labelle only; not all Quebec MRCs."
+}

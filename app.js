@@ -334,6 +334,34 @@
       'sand', 'pitch'].forEach(function (symbol, index) {
       addLegendItem(basemapLegend, symbol, extraLegendLabels[index]);
     });
+    var regionalLabels = {
+      fr: ['Bâtiment — données du Québec', 'Adresse — données du Québec',
+        'Violet : sources québécoises, MRC d’Antoine-Labelle seulement. La couleur indique la source, pas une précision garantie; les dates et la qualité varient.'],
+      en: ['Building — Quebec data', 'Address — Quebec data',
+        'Purple: Quebec sources, Antoine-Labelle MRC only. Color identifies the source, not guaranteed accuracy; dates and quality vary.'],
+      it: ['Edificio — dati del Québec', 'Indirizzo — dati del Québec',
+        'Viola: fonti del Québec, solo MRC Antoine-Labelle. Il colore indica la fonte, non una precisione garantita; date e qualità variano.'],
+      es: ['Edificio — datos de Quebec', 'Dirección — datos de Quebec',
+        'Violeta: fuentes de Quebec, solo MRC Antoine-Labelle. El color indica la fuente, no una precisión garantizada; las fechas y la calidad varían.'],
+      de: ['Gebäude — Québec-Daten', 'Adresse — Québec-Daten',
+        'Violett: Québec-Quellen, nur MRC Antoine-Labelle. Die Farbe zeigt die Quelle, keine garantierte Genauigkeit; Datum und Qualität variieren.'],
+      pt: ['Edifício — dados do Quebec', 'Endereço — dados do Quebec',
+        'Roxo: fontes do Quebec, apenas MRC Antoine-Labelle. A cor indica a fonte, não uma precisão garantida; datas e qualidade variam.'],
+      hi: ['भवन — क्यूबेक डेटा', 'पता — क्यूबेक डेटा',
+        'बैंगनी: क्यूबेक स्रोत, केवल Antoine-Labelle MRC। रंग स्रोत दर्शाता है, सटीकता की गारंटी नहीं; तिथियाँ और गुणवत्ता भिन्न हैं।'],
+      ar: ['مبنى — بيانات كيبيك', 'عنوان — بيانات كيبيك',
+        'البنفسجي: مصادر كيبيك، في Antoine-Labelle MRC فقط. اللون يحدد المصدر ولا يضمن الدقة؛ تختلف التواريخ والجودة.'],
+      id: ['Bangunan — data Quebec', 'Alamat — data Quebec',
+        'Ungu: sumber Quebec, hanya MRC Antoine-Labelle. Warna menunjukkan sumber, bukan jaminan akurasi; tanggal dan kualitas bervariasi.'],
+      vi: ['Tòa nhà — dữ liệu Québec', 'Địa chỉ — dữ liệu Québec',
+        'Màu tím: nguồn Québec, chỉ tại MRC Antoine-Labelle. Màu chỉ nguồn, không đảm bảo độ chính xác; ngày và chất lượng khác nhau.']
+    }[language];
+    addLegendItem(basemapLegend, 'qc-building', regionalLabels[0]);
+    addLegendItem(basemapLegend, 'qc-address', regionalLabels[1]);
+    var regionalNote = document.createElement('li');
+    regionalNote.className = 'legend-regional-note';
+    regionalNote.textContent = regionalLabels[2];
+    basemapLegend.appendChild(regionalNote);
     legend.hidden = false;
   }
   var expandMap = document.getElementById('expand-map');

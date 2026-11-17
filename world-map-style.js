@@ -231,8 +231,18 @@ window.geoGooseMapStyle = (function () {
         'text-halo-color': '#ffffff',
         'text-halo-width': 1.5
       });
+      layers.splice(labelIndex, 0, {
+        id: 'qc-addresses', type: 'symbol', source: 'geo-map', 'source-layer': 'qc_addresses', minzoom: 14,
+        layout: Object.assign({}, addressLayer.layout, { 'text-field': ['get', 'number'] }),
+        paint: { 'text-color': '#622e91', 'text-halo-color': '#ffffff', 'text-halo-width': 1.5 }
+      });
       var buildingIndex = layers.findIndex(function (layer) { return layer.id === 'buildings'; });
       if (buildingIndex === -1) throw new Error('La couche des bâtiments du style est introuvable.');
+      layers.splice(buildingIndex, 0, {
+        id: 'qc-buildings', type: 'fill', source: 'geo-map', 'source-layer': 'qc_buildings', minzoom: 12,
+        paint: { 'fill-color': '#d9c7e9', 'fill-outline-color': '#622e91' }
+      });
+      buildingIndex = layers.findIndex(function (layer) { return layer.id === 'buildings'; });
       layers.splice(buildingIndex + 1, 0, {
         id: 'experimental-building-outline',
         type: 'line',

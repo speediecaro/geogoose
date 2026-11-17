@@ -1,5 +1,17 @@
 # GeoGoose website
 
+## Quebec regional map data
+
+The public viewer supplements the world map with Quebec open address and
+building references for the entire Antoine-Labelle MRC (code 79).
+Purple legend entries identify these sources in all ten viewer languages.
+Coverage, dates, licenses and SHA256 are recorded in
+[`maps/antoine-labelle-20261117.json`](maps/antoine-labelle-20261117.json).
+Extraction, validation, publication and rollback instructions are in
+[`tools/mrc-tiles/README.md`](tools/mrc-tiles/README.md).
+Other Quebec MRCs have not yet been imported. Manual address-specific checks
+are not permanent tests or examples in this repository.
+
 ## Administrative backup OAuth pages
 
 `backups/index.html` and `backups/privacy/index.html` describe the private

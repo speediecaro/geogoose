@@ -215,12 +215,14 @@
     var paletteWin = frame.contentWindow;
     var paletteDoc = frame.contentDocument;
     var cloudEvents;
+    var cloudOptions;
     var osmRestored = false;
     var cloudRemoved = false;
     paletteWin.maplibregl = {
       setRTLTextPlugin: function () { return Promise.resolve(); },
       addProtocol: function () {},
-      Map: function () {
+      Map: function (options) {
+        cloudOptions = options;
         cloudEvents = {};
         this.on = function (name, callback) { cloudEvents[name] = callback; };
         this.remove = function () { cloudRemoved = true; };
@@ -256,6 +258,15 @@
       !addressStyle.layout['text-allow-overlap'], 'Address placement avoids collisions without forcing overlap');
     check(JSON.stringify(addressStyle.layout['text-field']) === '["get","addr_housenumber"]',
       'Address labels preserve source house numbers');
+    var qcLayers = paletteWin.geoGooseMapStyle.createLayers('fr');
+    var qcBuilding = qcLayers.find(function (layer) { return layer.id === 'qc-buildings'; });
+    var qcAddress = qcLayers.find(function (layer) { return layer.id === 'qc-addresses'; });
+    check(qcBuilding.minzoom === 12 && qcBuilding['source-layer'] === 'qc_buildings' &&
+      qcBuilding.paint['fill-color'] === '#d9c7e9', 'Quebec building layer uses regional footprints and legend color');
+    check(qcAddress.minzoom === 14 && qcAddress['source-layer'] === 'qc_addresses' &&
+      qcAddress.paint['text-color'] === '#622e91' &&
+      JSON.stringify(qcAddress.layout['text-field']) === '["get","number"]',
+      'Quebec address layer uses regional numbers and legend color');
     paletteWin.geoGooseMapStyle = {
       createLayers: function () { return []; },
       addDetails: function () {}
@@ -272,8 +283,15 @@
       addTo: function () { osmRestored = true; }
     }, 'fr', 'Carte indisponible.');
     await layout();
+    check(cloudOptions.style.sources['geo-map'].tiles[0] === 'geogoose://{z}/{x}/{y}' &&
+      cloudOptions.style.sources['geo-map'].maxzoom === 15, 'Production source uses sparse regional tile protocol');
     check(!paletteDoc.getElementById('basemap-legend').hidden, 'World palette shown with world map');
-    check(paletteDoc.querySelectorAll('#basemap-legend li').length === 23, 'World legend explains main map layers and services');
+    check(paletteDoc.querySelectorAll('#basemap-legend li').length === 26, 'World legend explains main layers, services and Quebec sources');
+    check(paletteWin.getComputedStyle(paletteDoc.querySelector('.legend-qc-building')).backgroundColor === 'rgb(217, 199, 233)' &&
+      paletteWin.getComputedStyle(paletteDoc.querySelector('.legend-qc-address')).color === 'rgb(98, 46, 145)',
+      'Quebec legend matches building and address colors');
+    check(paletteDoc.querySelector('.legend-regional-note').textContent.includes('Antoine-Labelle'),
+      'Quebec legend identifies the limited regional coverage');
     check(paletteDoc.querySelector('.legend-parking').textContent === 'P' &&
       paletteDoc.querySelector('.legend-toilets svg') &&
       paletteDoc.querySelector('.legend-forest svg') &&
