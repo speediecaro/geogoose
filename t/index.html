@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex">
   <title>GeoGoose</title>
   <link rel="stylesheet" href="../leaflet/leaflet.css">
-  <link rel="stylesheet" href="../style.css?v=20261116-world1">
+  <link rel="stylesheet" href="../style.css?v=20261116-legend2">
 </head>
 <body>
   <header>
@@ -38,13 +38,21 @@
     <p id="map-status" role="status" hidden></p>
     <button id="map-fallback" type="button" hidden></button>
     <div class="map-toolbar">
+      <details id="map-legend" hidden>
+        <summary id="legend-summary"></summary>
+        <div class="legend-content">
+          <ul id="route-legend"></ul>
+          <ul id="basemap-legend" hidden></ul>
+          <p id="legend-note"></p>
+        </div>
+      </details>
       <button id="expand-map" type="button" aria-controls="map-view" aria-expanded="false" hidden></button>
     </div>
     <div id="map"></div>
   </div>
   <script src="../leaflet/leaflet.js"></script>
-  <script src="../world-map-style.js?v=20261116-world2"></script>
-  <script src="../world-map.js?v=20261116-world2"></script>
-  <script src="../app.js?v=20261116-world1"></script>
+  <script src="../world-map-style.js?v=20261116-address1"></script>
+  <script src="../world-map.js?v=20261116-legend2"></script>
+  <script src="../app.js?v=20261116-legend2"></script>
 </body>
 </html>

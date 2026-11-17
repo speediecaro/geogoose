@@ -230,6 +230,112 @@
     return;
   }
   var carte = L.map('map', { zoomControl: false });
+  var legendLabels = {
+    fr: ['Légende', 'Tracé GPS reçu', 'Position intermédiaire', 'Eau', 'Forêt', 'Parc / espace vert',
+      'Milieu humide', 'Bâtiment cartographié', 'Terre agricole', 'Jardin', 'Cimetière',
+      'Sentier piéton', 'Piste cyclable', 'Chemin de terre / piste', 'Limite administrative', 'Numéro d’adresse',
+      'Les détails varient selon le zoom et les données disponibles. Un bâtiment absent de la carte peut exister sur le terrain.'],
+    en: ['Legend', 'Received GPS trace', 'Intermediate position', 'Water', 'Forest', 'Park / green space',
+      'Wetland', 'Mapped building', 'Farmland', 'Garden', 'Cemetery',
+      'Walking path', 'Cycleway', 'Track', 'Administrative boundary', 'Address number',
+      'Details vary with zoom and available data. A building missing from the map may exist on the ground.'],
+    it: ['Legenda', 'Traccia GPS ricevuta', 'Posizione intermedia', 'Acqua', 'Bosco', 'Parco / area verde',
+      'Zona umida', 'Edificio mappato', 'Terreno agricolo', 'Giardino', 'Cimitero',
+      'Sentiero pedonale', 'Pista ciclabile', 'Strada sterrata / pista', 'Confine amministrativo', 'Numero civico',
+      'I dettagli variano in base allo zoom e ai dati disponibili. Un edificio assente dalla mappa può esistere sul terreno.'],
+    es: ['Leyenda', 'Trazado GPS recibido', 'Posición intermedia', 'Agua', 'Bosque', 'Parque / zona verde',
+      'Humedal', 'Edificio cartografiado', 'Terreno agrícola', 'Jardín', 'Cementerio',
+      'Sendero peatonal', 'Carril bici', 'Camino de tierra / pista', 'Límite administrativo', 'Número de dirección',
+      'Los detalles varían según el zoom y los datos disponibles. Un edificio ausente del mapa puede existir en el terreno.'],
+    de: ['Legende', 'Empfangene GPS-Spur', 'Zwischenposition', 'Wasser', 'Wald', 'Park / Grünfläche',
+      'Feuchtgebiet', 'Kartiertes Gebäude', 'Ackerland', 'Garten', 'Friedhof',
+      'Fußweg', 'Radweg', 'Feldweg / Fahrspur', 'Verwaltungsgrenze', 'Hausnummer',
+      'Details hängen von Zoom und verfügbaren Daten ab. Ein auf der Karte fehlendes Gebäude kann vor Ort existieren.'],
+    pt: ['Legenda', 'Traçado GPS recebido', 'Posição intermédia', 'Água', 'Floresta', 'Parque / espaço verde',
+      'Zona húmida', 'Edifício cartografado', 'Terreno agrícola', 'Jardim', 'Cemitério',
+      'Caminho pedonal', 'Ciclovia', 'Caminho de terra / pista', 'Limite administrativo', 'Número de endereço',
+      'Os detalhes variam com o zoom e os dados disponíveis. Um edifício ausente do mapa pode existir no terreno.'],
+    hi: ['मानचित्र संकेत', 'प्राप्त GPS पथ', 'बीच का स्थान', 'पानी', 'जंगल', 'पार्क / हरित क्षेत्र',
+      'आर्द्रभूमि', 'मानचित्र पर दर्ज भवन', 'कृषि भूमि', 'बगीचा', 'कब्रिस्तान',
+      'पैदल पथ', 'साइकिल पथ', 'कच्चा रास्ता', 'प्रशासनिक सीमा', 'पता संख्या',
+      'विवरण ज़ूम और उपलब्ध डेटा पर निर्भर हैं। मानचित्र पर न दिखने वाला भवन वास्तविक स्थान पर मौजूद हो सकता है।'],
+    ar: ['مفتاح الخريطة', 'مسار GPS المستلم', 'موقع وسيط', 'مياه', 'غابة', 'حديقة / مساحة خضراء',
+      'أرض رطبة', 'مبنى مرسوم على الخريطة', 'أرض زراعية', 'بستان', 'مقبرة',
+      'ممر للمشاة', 'مسار دراجات', 'طريق ترابي / مسلك', 'حدود إدارية', 'رقم العنوان',
+      'تختلف التفاصيل حسب التكبير والبيانات المتاحة. قد يوجد مبنى على الأرض رغم غيابه عن الخريطة.'],
+    id: ['Legenda', 'Jejak GPS yang diterima', 'Posisi antara', 'Air', 'Hutan', 'Taman / ruang hijau',
+      'Lahan basah', 'Bangunan yang dipetakan', 'Lahan pertanian', 'Kebun', 'Pemakaman',
+      'Jalur pejalan kaki', 'Jalur sepeda', 'Jalan tanah / jalur', 'Batas administratif', 'Nomor alamat',
+      'Detail bergantung pada zoom dan data yang tersedia. Bangunan yang tidak ada di peta mungkin ada di lapangan.'],
+    vi: ['Chú giải', 'Đường GPS đã nhận', 'Vị trí trung gian', 'Mặt nước', 'Rừng', 'Công viên / mảng xanh',
+      'Đất ngập nước', 'Tòa nhà đã lập bản đồ', 'Đất nông nghiệp', 'Vườn', 'Nghĩa trang',
+      'Đường đi bộ', 'Đường xe đạp', 'Đường đất / lối đi', 'Ranh giới hành chính', 'Số địa chỉ',
+      'Chi tiết thay đổi theo mức thu phóng và dữ liệu có sẵn. Tòa nhà không có trên bản đồ vẫn có thể tồn tại trên thực địa.']
+  }[language];
+  var legend = document.getElementById('map-legend');
+  if (legend) {
+    document.getElementById('legend-summary').textContent = legendLabels[0];
+    document.getElementById('legend-note').textContent = legendLabels[16];
+    function addLegendItem(list, symbol, label) {
+      var item = document.createElement('li');
+      var swatch = document.createElement('span');
+      swatch.className = 'legend-swatch legend-' + symbol;
+      swatch.setAttribute('aria-hidden', 'true');
+      var symbolPaths = {
+        forest: 'M6 22L16 2L26 22ZM16 22V30',
+        wetland: 'M2 5H14M8 13H24M2 21H14M18 29H30',
+        garden: 'M6 16H26M16 6V26M9 9L23 23M9 23L23 9',
+        cemetery: 'M8 26V14A8 8 0 0 1 24 14V26M4 28H28',
+        camping: 'M5 25L16 7L27 25ZM12 25L16 17L20 25',
+        toilets: 'M7 11H13V19H7ZM8 19V26M12 19V26M20 11H24L27 20H17ZM20 20V26M24 20V26M12 7A2 2 0 1 0 8 7A2 2 0 1 0 12 7M24 7A2 2 0 1 0 20 7A2 2 0 1 0 24 7',
+        shopping: 'M8 12H24V25H8ZM12 12A4 4 0 0 1 20 12',
+        pharmacy: 'M13 6H19V13H26V19H19V26H13V19H6V13H13Z',
+        worship: 'M16 6L25 16L16 26L7 16Z'
+      };
+      if (symbolPaths[symbol]) {
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 32 32');
+        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', symbolPaths[symbol]);
+        svg.appendChild(path);
+        swatch.appendChild(svg);
+      }
+      var letters = { parking: 'P', bank: 'B', subway: 'M' };
+      if (letters[symbol]) swatch.textContent = letters[symbol];
+      item.appendChild(swatch);
+      item.appendChild(document.createTextNode(label));
+      list.appendChild(item);
+    }
+    var routeLegend = document.getElementById('route-legend');
+    if (points.length > 1) {
+      addLegendItem(routeLegend, 'route', legendLabels[1]);
+      addLegendItem(routeLegend, 'start', t.depart);
+    }
+    if (points.length > 2) addLegendItem(routeLegend, 'point', legendLabels[2]);
+    addLegendItem(routeLegend, 'last', t.arrivee);
+    var basemapLegend = document.getElementById('basemap-legend');
+    ['water', 'forest', 'park', 'wetland', 'building', 'farmland', 'garden', 'cemetery',
+      'trail', 'cycleway', 'track', 'boundary', 'address'].forEach(function (symbol, index) {
+      addLegendItem(basemapLegend, symbol, legendLabels[index + 3]);
+    });
+    var extraLegendLabels = {
+      fr: ['Stationnement', 'Toilettes', 'Camping / caravanes', 'Commerces', 'Pharmacie', 'Banque', 'Lieu de culte', 'Entrée de métro', 'Sable / plage', 'Terrain de sport'],
+      en: ['Parking', 'Toilets', 'Camping / caravans', 'Shops', 'Pharmacy', 'Bank', 'Place of worship', 'Subway entrance', 'Sand / beach', 'Sports pitch'],
+      it: ['Parcheggio', 'Servizi igienici', 'Campeggio / caravan', 'Negozi', 'Farmacia', 'Banca', 'Luogo di culto', 'Ingresso metropolitana', 'Sabbia / spiaggia', 'Campo sportivo'],
+      es: ['Estacionamiento', 'Aseos', 'Camping / caravanas', 'Comercios', 'Farmacia', 'Banco', 'Lugar de culto', 'Entrada de metro', 'Arena / playa', 'Campo deportivo'],
+      de: ['Parkplatz', 'Toiletten', 'Camping / Wohnwagen', 'Geschäfte', 'Apotheke', 'Bank', 'Gebetsstätte', 'U-Bahn-Eingang', 'Sand / Strand', 'Sportplatz'],
+      pt: ['Estacionamento', 'Sanitários', 'Campismo / caravanas', 'Comércio', 'Farmácia', 'Banco', 'Local de culto', 'Entrada de metro', 'Areia / praia', 'Campo desportivo'],
+      hi: ['पार्किंग', 'शौचालय', 'कैंपिंग / कारवां', 'दुकानें', 'दवा की दुकान', 'बैंक', 'पूजा स्थल', 'मेट्रो प्रवेश', 'रेत / समुद्र तट', 'खेल का मैदान'],
+      ar: ['موقف سيارات', 'دورات مياه', 'تخييم / قوافل', 'متاجر', 'صيدلية', 'بنك', 'مكان عبادة', 'مدخل مترو', 'رمال / شاطئ', 'ملعب رياضي'],
+      id: ['Parkir', 'Toilet', 'Perkemahan / karavan', 'Pertokoan', 'Apotek', 'Bank', 'Tempat ibadah', 'Pintu masuk kereta bawah tanah', 'Pasir / pantai', 'Lapangan olahraga'],
+      vi: ['Bãi đỗ xe', 'Nhà vệ sinh', 'Cắm trại / xe lưu trú', 'Cửa hàng', 'Nhà thuốc', 'Ngân hàng', 'Nơi thờ tự', 'Lối vào tàu điện ngầm', 'Cát / bãi biển', 'Sân thể thao']
+    }[language];
+    ['parking', 'toilets', 'camping', 'shopping', 'pharmacy', 'bank', 'worship', 'subway',
+      'sand', 'pitch'].forEach(function (symbol, index) {
+      addLegendItem(basemapLegend, symbol, extraLegendLabels[index]);
+    });
+    legend.hidden = false;
+  }
   var expandMap = document.getElementById('expand-map');
   expandMap.hidden = false;
   expandMap.textContent = layoutLabels[1];

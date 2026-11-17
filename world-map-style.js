@@ -217,7 +217,20 @@ window.geoGooseMapStyle = (function () {
       });
       var labelIndex = layers.findIndex(function (layer) { return layer.id === 'address_label'; });
       if (labelIndex === -1) throw new Error('La couche des étiquettes du style est introuvable.');
-      layers[labelIndex].minzoom = 15;
+      var addressLayer = layers[labelIndex];
+      addressLayer.minzoom = 14;
+      Object.assign(addressLayer.layout, {
+        'text-font': ['Noto Sans Regular'],
+        'text-size': ['interpolate', ['linear'], ['zoom'], 14, 11, 16, 13, 18, 15],
+        'text-variable-anchor': ['center', 'top', 'bottom', 'left', 'right'],
+        'text-radial-offset': 0.5,
+        'text-padding': 2
+      });
+      Object.assign(addressLayer.paint, {
+        'text-color': '#514b47',
+        'text-halo-color': '#ffffff',
+        'text-halo-width': 1.5
+      });
       var buildingIndex = layers.findIndex(function (layer) { return layer.id === 'buildings'; });
       if (buildingIndex === -1) throw new Error('La couche des bâtiments du style est introuvable.');
       layers.splice(buildingIndex + 1, 0, {

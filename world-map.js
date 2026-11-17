@@ -111,6 +111,7 @@ window.geoGooseWorldMap = (function () {
     var text = messages[language] || messages.en;
     var status = document.getElementById('map-status');
     var fallbackButton = document.getElementById('map-fallback');
+    var basemapLegend = document.getElementById('basemap-legend');
     var attribution = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>';
     var cloud = null;
     var cloudContainer = null;
@@ -134,6 +135,7 @@ window.geoGooseWorldMap = (function () {
     function fallback(reason) {
       if (switched) return;
       switched = true;
+      if (basemapLegend) basemapLegend.hidden = true;
       clearLoading();
       if (cloud) {
         cloud.remove();
@@ -219,6 +221,7 @@ window.geoGooseWorldMap = (function () {
         }
       });
       map.attributionControl.addAttribution(attribution);
+      if (basemapLegend) basemapLegend.hidden = false;
       geoGooseMapStyle.addDetails(cloud, language, function (error) {
         console.error('Erreur du style de carte mondiale.', error);
         fallback(text.error + ' ' + (unavailableMessage || ''));

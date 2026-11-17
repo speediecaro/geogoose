@@ -31,6 +31,24 @@ The map can fill the viewport using its expand button and return to the normal
 layout using the same button or Escape. Leaflet resizes without resetting the
 current route or zoom.
 
+The collapsible legend beside the expand button explains the GPS trace and
+position markers in all ten viewer languages. It remains accessible in expanded
+view, scrolls independently and does not reduce the map height. World-map color
+swatches describe the main mapped land-cover, building, path and boundary layers;
+they are hidden when the viewer uses the OpenStreetMap fallback, whose palette
+is different. A coverage note explains that detail depends on zoom and available
+data: a missing building outline does not establish that no building exists.
+World-map address numbers start at MapLibre zoom 14 (Leaflet zoom 15), use
+upright, darker text with a white halo, and grow with zoom. Alternative label
+anchors help avoid collisions without forcing overlapping numbers. They still
+depend on address points present in the archive and do not imply a building
+footprint is available.
+The legend also illustrates forest, wetland, garden and cemetery motifs, plus
+parking, toilets, camping, shopping, pharmacy, bank, worship and subway symbols.
+Sand/beach and sports-pitch swatches describe existing style layers; no generic
+desert category is implied. These are a key to supported symbols, not an
+inventory of features currently visible in the viewport.
+
 GeoGoose blue is the only map palette, including the route line and point
 outlines. Older links with a `palette` query parameter also use blue.
 

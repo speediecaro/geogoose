@@ -69,6 +69,17 @@
       check(mapElement.getBoundingClientRect().height >= 350, 'Map occupies most of mobile viewport initially');
       check(doc.documentElement.scrollWidth <= win.innerWidth, 'No horizontal mobile overflow');
       check(expandButton.textContent.length > 0, 'Localized expand control');
+      var legend = doc.getElementById('map-legend');
+      check(!legend.hidden && !legend.open, 'Legend available and collapsed by default');
+      check(doc.getElementById('legend-summary').textContent.length > 0, 'Localized legend title');
+      check(doc.querySelectorAll('#route-legend li').length === 4, 'Legend explains every GPS symbol');
+      check(doc.getElementById('basemap-legend').hidden, 'World palette hidden on OSM fallback');
+      doc.getElementById('legend-summary').click();
+      await layout();
+      check(legend.open && doc.getElementById('legend-note').checkVisibility(), 'Legend opens with data coverage note');
+      check(doc.documentElement.scrollWidth <= win.innerWidth, 'Open legend has no horizontal overflow');
+      check(mapElement.getBoundingClientRect().height >= 350, 'Open legend does not shrink map');
+      doc.getElementById('legend-summary').click();
       doc.getElementById('google-summary').click();
       await layout();
       check(googleOptions.open && doc.getElementById('google').checkVisibility(), 'Google links expand');
@@ -111,6 +122,10 @@
       check(Math.abs(doc.getElementById('map-view').getBoundingClientRect().height - win.innerHeight) < 1,
         'Expanded map fills viewport');
       check(googleOptions.inert, 'Background controls unavailable while expanded');
+      doc.getElementById('legend-summary').click();
+      await layout();
+      check(legend.checkVisibility() && !legend.inert, 'Legend accessible in expanded map');
+      doc.getElementById('legend-summary').click();
       check(doc.querySelector('.leaflet-container').clientHeight === mapElement.clientHeight, 'Map container resized');
       expandButton.click();
       await layout();
@@ -174,6 +189,8 @@
       await load('fr');
       var singleDoc = frame.contentDocument;
       check(singleDoc.getElementById('google-options').hidden, 'Single point has no empty route disclosure');
+      check(singleDoc.querySelectorAll('#route-legend li').length === 1 &&
+        singleDoc.querySelector('#route-legend .legend-last'), 'Single-point legend only shows last-position marker');
       check(singleDoc.getElementById('google').checkVisibility(), 'Single point keeps Google position link visible');
       check(singleDoc.documentElement.scrollWidth <= viewport[0], 'No horizontal overflow across viewports');
       singleDoc.getElementById('expand-map').click();
@@ -184,6 +201,77 @@
       await layout();
       check(!singleDoc.body.classList.contains('map-expanded'), 'Single-point map restores normal layout');
     }
+    var paletteWin = frame.contentWindow;
+    var paletteDoc = frame.contentDocument;
+    var cloudEvents;
+    var osmRestored = false;
+    var cloudRemoved = false;
+    paletteWin.maplibregl = {
+      setRTLTextPlugin: function () { return Promise.resolve(); },
+      addProtocol: function () {},
+      Map: function () {
+        cloudEvents = {};
+        this.on = function (name, callback) { cloudEvents[name] = callback; };
+        this.remove = function () { cloudRemoved = true; };
+      }
+    };
+    paletteWin.pmtiles = {
+      Protocol: function () { this.add = function () {}; },
+      PMTiles: function () {}
+    };
+    paletteWin.basemaps = {
+      namedFlavor: function () { return {}; },
+      layers: function () {
+        return ['boundaries', 'landuse_park', 'landuse_urban_green', 'water_stream',
+          'water_river', 'landuse_pedestrian', 'water', 'landuse_runway', 'roads_rail',
+          'roads_tunnels_other_casing', 'roads_major', 'roads_bridges_major',
+          'buildings', 'address_label'].map(function (id) {
+          return {
+            id: id,
+            layout: id === 'address_label' ? { 'text-field': ['get', 'addr_housenumber'] } : {},
+            paint: { 'fill-color': '#c8e8bc' }
+          };
+        });
+      }
+    };
+    var addressStyle = paletteWin.geoGooseMapStyle.createLayers('fr').find(function (layer) {
+      return layer.id === 'address_label';
+    });
+    check(addressStyle.minzoom === 14, 'Address labels start one zoom level earlier');
+    check(addressStyle.layout['text-font'][0] === 'Noto Sans Regular', 'Address labels use upright text');
+    check(addressStyle.paint['text-color'] === '#514b47' && addressStyle.paint['text-halo-width'] === 1.5,
+      'Address labels have darker text and a stronger halo');
+    check(addressStyle.layout['text-variable-anchor'].length === 5 &&
+      !addressStyle.layout['text-allow-overlap'], 'Address placement avoids collisions without forcing overlap');
+    check(JSON.stringify(addressStyle.layout['text-field']) === '["get","addr_housenumber"]',
+      'Address labels preserve source house numbers');
+    paletteWin.geoGooseMapStyle = {
+      createLayers: function () { return []; },
+      addDetails: function () {}
+    };
+    var mockMap = {
+      getContainer: function () { return paletteDoc.getElementById('map'); },
+      getCenter: function () { return { lat: 45.5, lng: -73.57 }; },
+      getZoom: function () { return 16; },
+      hasLayer: function () { return false; },
+      on: function () {},
+      attributionControl: { addAttribution: function () {}, removeAttribution: function () {} }
+    };
+    paletteWin.geoGooseWorldMap.attach(mockMap, paletteWin.L, {
+      addTo: function () { osmRestored = true; }
+    }, 'fr', 'Carte indisponible.');
+    await layout();
+    check(!paletteDoc.getElementById('basemap-legend').hidden, 'World palette shown with world map');
+    check(paletteDoc.querySelectorAll('#basemap-legend li').length === 23, 'World legend explains main map layers and services');
+    check(paletteDoc.querySelector('.legend-parking').textContent === 'P' &&
+      paletteDoc.querySelector('.legend-toilets svg') &&
+      paletteDoc.querySelector('.legend-forest svg') &&
+      paletteDoc.querySelector('.legend-wetland svg'), 'Legend includes service symbols and land-cover motifs');
+    cloudEvents.idle();
+    paletteDoc.getElementById('map-fallback').click();
+    check(paletteDoc.getElementById('basemap-legend').hidden && osmRestored && cloudRemoved,
+      'Fallback removes world palette and restores OSM');
+    check(!paletteDoc.getElementById('map-legend').hidden, 'GPS legend remains available after fallback');
     result.textContent = 'PASS: ' + checks + ' checks';
   } catch (error) {
     result.textContent = 'FAIL: ' + error.message;
