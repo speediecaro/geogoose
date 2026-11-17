@@ -235,7 +235,7 @@
   expandMap.textContent = layoutLabels[1];
   function setExpanded(expanded) {
     document.body.classList.toggle('map-expanded', expanded);
-    ['header', '#google-options', '#map-status'].forEach(function (selector) {
+    ['header', '#google-options'].forEach(function (selector) {
       document.querySelector(selector).inert = expanded;
     });
     expandMap.setAttribute('aria-expanded', String(expanded));
@@ -256,12 +256,12 @@
   });
   mapResize.observe(document.getElementById('map'));
   L.control.zoom({ zoomInTitle: t.zoomIn, zoomOutTitle: t.zoomOut }).addTo(carte);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
   }).on('tileerror', function () {
     mapStatus.hidden = false;
-  }).addTo(carte);
+  });
 
   var routeColor = getComputedStyle(document.documentElement).getPropertyValue('--brand-primary').trim();
   var ligne = L.polyline(points, { color: routeColor, weight: 5, opacity: 0.85 }).addTo(carte);
@@ -278,6 +278,19 @@
     carte.fitBounds(ligne.getBounds(), { padding: [30, 30], maxZoom: 17 });
   } else {
     carte.setView(dernier, 16);
+  }
+
+  var testMode = new URLSearchParams(location.search).has('test');
+  if (window.geoGooseWorldMap && !testMode) {
+    try {
+      window.geoGooseWorldMap.attach(carte, L, osmLayer, language, t.mapUnavailable);
+    } catch (error) {
+      console.error('Impossible de préparer la carte mondiale.', error);
+      osmLayer.addTo(carte);
+      mapStatus.hidden = false;
+    }
+  } else {
+    osmLayer.addTo(carte);
   }
 
 })();

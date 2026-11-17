@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'none'; base-uri 'none'; form-action 'none'">
+        content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://protomaps.github.io https://tile.openstreetmap.org; connect-src 'self' https://world-maps.geogoose.app https://protomaps.github.io; worker-src blob:; base-uri 'none'; form-action 'none'">
   <meta name="robots" content="noindex">
   <title>GeoGoose</title>
   <link rel="stylesheet" href="../leaflet/leaflet.css">
-  <link rel="stylesheet" href="../style.css?v=20261021-map1">
+  <link rel="stylesheet" href="../style.css?v=20261116-world1">
 </head>
 <body>
   <header>
@@ -34,14 +34,17 @@
       </section>
     </div>
   </details>
-  <p id="map-status" role="status" hidden></p>
   <div id="map-view">
+    <p id="map-status" role="status" hidden></p>
+    <button id="map-fallback" type="button" hidden></button>
     <div class="map-toolbar">
       <button id="expand-map" type="button" aria-controls="map-view" aria-expanded="false" hidden></button>
     </div>
     <div id="map"></div>
   </div>
   <script src="../leaflet/leaflet.js"></script>
-  <script src="../app.js?v=20261021-map1"></script>
+  <script src="../world-map-style.js?v=20261116-world1"></script>
+  <script src="../world-map.js?v=20261116-world1"></script>
+  <script src="../app.js?v=20261116-world1"></script>
 </body>
 </html>
