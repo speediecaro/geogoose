@@ -227,7 +227,6 @@ window.geoGooseWorldMap = (function () {
         console.error('Erreur de carte mondiale.', event.error);
         fallback(text.error + ' ' + (unavailableMessage || ''));
       });
-      cloud.on('dataloading', startLoading);
       cloud.on('idle', function () {
         if (switched) return;
         clearLoading();
@@ -242,7 +241,6 @@ window.geoGooseWorldMap = (function () {
 
       function syncCloud() {
         if (!cloud || switched || animatingZoom) return;
-        startLoading();
         var current = map.getCenter();
         cloud.resize();
         cloud.jumpTo({ center: [current.lng, current.lat], zoom: map.getZoom() - 1 });
