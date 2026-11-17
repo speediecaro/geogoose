@@ -365,6 +365,25 @@ window.geoGooseMapStyle = (function () {
           });
           var poiLayer = map.getStyle().layers.find(function (layer) { return layer.id === 'pois'; });
           if (!poiLayer) throw new Error('La couche des points d’intérêt est introuvable.');
+          var socialFacilityLayout = Object.assign({}, poiLayer.layout, {
+            'text-offset': [0, 0],
+            'text-variable-anchor': ['center', 'left', 'right', 'top', 'bottom'],
+            'text-size': ['interpolate', ['linear'], ['zoom'], 14, 11, 18, 14]
+          });
+          delete socialFacilityLayout['icon-image'];
+          map.addLayer({
+            id: 'geogoose-social-facility-labels',
+            type: 'symbol',
+            source: 'geo-map',
+            'source-layer': 'pois',
+            minzoom: 14,
+            filter: ['all',
+              ['==', ['get', 'kind'], 'social_facility'],
+              ['any', ['has', 'name'], ['has', 'pgf:name']]
+            ],
+            layout: socialFacilityLayout,
+            paint: { 'text-color': '#70565c', 'text-halo-color': '#fff', 'text-halo-width': 1.5 }
+          }, 'pois');
           function addPoiIcon(name, draw) {
             canvas.width = canvas.height = 32;
             context.fillStyle = '#fff';
